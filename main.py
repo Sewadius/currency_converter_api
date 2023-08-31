@@ -1,13 +1,7 @@
 
-import get_key_API
+import get_key_api
 
-# Ключ по скрыть и это можно было в отдельную функцию внести
-# API_KEY = ''
-#
-#
-# response = requests.get(HOST)
-# CURRENCIES = response.json().get('data')
-#
+
 # MESSAGE_CURRENCY_ERROR = 'Выбранной валюты нет! Попробуйте снова.'
 # MESSAGE_AMOUNT_ERROR = 'Неверно введена сумма! Попробуйте снова.'
 

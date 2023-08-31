@@ -8,5 +8,6 @@ def get_api_key() -> str:
     data = json.loads(file_json.read())
     return data['key']
 
+
 API_KEY = get_api_key()
 HOST = f'https://api.freecurrencyapi.com/v1/latest?apikey={API_KEY}'
