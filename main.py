@@ -1,15 +1,15 @@
 
-import requests
+import get_key_API
 
 # Ключ по скрыть и это можно было в отдельную функцию внести
-API_KEY = ''
-HOST = f'https://api.freecurrencyapi.com/v1/latest?apikey={API_KEY}'
-
-response = requests.get(HOST)
-CURRENCIES = response.json().get('data')
-
-MESSAGE_CURRENCY_ERROR = 'Выбранной валюты нет! Попробуйте снова.'
-MESSAGE_AMOUNT_ERROR = 'Неверно введена сумма! Попробуйте снова.'
+# API_KEY = ''
+#
+#
+# response = requests.get(HOST)
+# CURRENCIES = response.json().get('data')
+#
+# MESSAGE_CURRENCY_ERROR = 'Выбранной валюты нет! Попробуйте снова.'
+# MESSAGE_AMOUNT_ERROR = 'Неверно введена сумма! Попробуйте снова.'
 
 # Если что между функциями и между кодом и функции по 2 пропуска строк
 def greeting():
@@ -63,21 +63,22 @@ def input_converting_currency():
         print(MESSAGE_CURRENCY_ERROR)
     return converting_currency
 
-def get_print_result(conv_currency, cur_currency, amount):
-    converted_amount = CURRENCIES.get(conv_currency, 1) / CURRENCIES.get(cur_currency, 1) * amount
-    print(f"ИТОГО: {round(converted_amount, 2)} {converting_currency}")
+# def get_print_result(conv_currency, cur_currency, amount):
+#     converted_amount = CURRENCIES.get(conv_currency, 1) / CURRENCIES.get(cur_currency, 1) * amount
+#     print(f"ИТОГО: {round(converted_amount, 2)} {converting_currency}")
 
 if __name__ == '__main__':
-    greeting()
-    print_currencies()
-
-    while True:
-        current_currency = input_current_currency()
-        amount = input_amount()
-        converting_currency = input_converting_currency()
-        get_print_result(converting_currency, current_currency, amount)
-
-        user = input('Хотите запустить заново? (Да/Нет) ')
-        if user.lower() == 'нет':
-            break
+    api_get.get_api_key()
+    # greeting()
+    # print_currencies()
+    #
+    # while True:
+    #     current_currency = input_current_currency()
+    #     amount = input_amount()
+    #     converting_currency = input_converting_currency()
+    #     get_print_result(converting_currency, current_currency, amount)
+    #
+    #     user = input('Хотите запустить заново? (Да/Нет) ')
+    #     if user.lower() == 'нет':
+    #         break
 
