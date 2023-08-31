@@ -1,9 +1,8 @@
-# В целом работа хорошая, нужно чуть-чуть доработать до идеала. Но вы огромный молодец!
 
 import requests
 
 # Ключ по скрыть и это можно было в отдельную функцию внести
-API_KEY = 'fca_live_BlYIgL6cU5LFO70aCay0UfgUasfD83vUU0Lpm6wL'
+API_KEY = ''
 HOST = f'https://api.freecurrencyapi.com/v1/latest?apikey={API_KEY}'
 
 response = requests.get(HOST)
@@ -68,17 +67,17 @@ def get_print_result(conv_currency, cur_currency, amount):
     converted_amount = CURRENCIES.get(conv_currency, 1) / CURRENCIES.get(cur_currency, 1) * amount
     print(f"ИТОГО: {round(converted_amount, 2)} {converting_currency}")
 
-# Вот этот блок можно было перенести под функцию main, тогда всё было бы шикарно!
-greeting()
-print_currencies()
+if __name__ == '__main__':
+    greeting()
+    print_currencies()
 
-while True:
-    current_currency = input_current_currency()
-    amount = input_amount()
-    converting_currency = input_converting_currency()
-    get_print_result(converting_currency, current_currency, amount)
+    while True:
+        current_currency = input_current_currency()
+        amount = input_amount()
+        converting_currency = input_converting_currency()
+        get_print_result(converting_currency, current_currency, amount)
 
-    user = input('Хотите запустить заново? (Да/Нет) ')
-    if user.lower() == 'нет':
-        break
+        user = input('Хотите запустить заново? (Да/Нет) ')
+        if user.lower() == 'нет':
+            break
 
