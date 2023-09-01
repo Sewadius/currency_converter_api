@@ -7,7 +7,7 @@ OUTPUT_DIVIDER = 6
 def show_currencies() -> None:
     """Show information about all currencies"""
     print('\nThe following currencies are available:')
-    for counter, key in enumerate(CURRENCIES, start=1):
-        print(f'{counter}. {key}', end=' | ')
-        if not counter % OUTPUT_DIVIDER:
+    for i, key in enumerate(CURRENCIES, start=1):
+        print(f'{i}. {key}', end=' | ')
+        if not i % OUTPUT_DIVIDER:
             print()
