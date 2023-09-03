@@ -1,5 +1,13 @@
 {
   "AUD": "Australian dollar",
   "BGD": "Bulgarian lev",
-  "BRL": "Brazilian real"
+  "BRL": "Brazilian real",
+  "CAD": "Canadian dollar",
+  "CHF": "Swiss franc",
+  "CNY": "Chinese yuan",
+  "CZK": "Czech koruna",
+  "DKK": "Danish krone",
+  "EUR": "Euro",
+  "GBP": "Pound sterling",
+  "HKD": "Hong Kong dollar"
 }

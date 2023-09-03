@@ -1,18 +1,11 @@
-
 from greeting import greets
 from currency import show_currencies
+from  user_input import get_user_command
 
 
-# MESSAGE_CURRENCY_ERROR = 'Выбранной валюты нет! Попробуйте снова.'
-# MESSAGE_AMOUNT_ERROR = 'Неверно введена сумма! Попробуйте снова.'
+# MESSAGE_CURRENCY_ERR = 'Выбранной валюты нет! Попробуйте снова.'
+# MESSAGE_AMOUNT_ERR = 'Неверно введена сумма! Попробуйте снова.'
 
-# def print_currencies():
-#     print("Имеются следующие валюты:")
-#     i = 1
-#     for key, value in CURRENCIES.items():
-#         print(f"{i}. {key}")
-#         i += 1
-#
 # def input_current_currency():
 #     while True:
 #         current_currency = input("Введите свою валюту: ").upper()
@@ -54,8 +47,8 @@ from currency import show_currencies
 if __name__ == '__main__':
     greets()                    # Greeting for user
     show_currencies()           # Show info about currencies
-    # greeting()
-    # print_currencies()
+    get_user_command()
+
     #
     # while True:
     #     current_currency = input_current_currency()

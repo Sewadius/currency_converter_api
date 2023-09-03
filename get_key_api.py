@@ -1,11 +1,11 @@
 # Obtaining API Key from JSON file
-import json
+from json import loads
 
 
 def get_api_key() -> str:
     """Get API Key from JSON file"""
     file_json = open('key.json', "r")
-    data = json.loads(file_json.read())
+    data = loads(file_json.read())
     return data['key']
 
 

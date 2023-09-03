@@ -1,12 +1,13 @@
 # Handle with currency dictionary
 from get_data_api import CURRENCIES
+from json import loads
 
+# Separator for currency output
 OUTPUT_DIVIDER = 6
-INFO_CURRENCIES = {
-    'AUD': 'Australian dollar',
-    'BGD': 'Bulgarian lev',
-    'BRL': 'Brazilian real'
-}
+
+# Number codes dictionary for currencies
+NUM_CURRENCIES = {}
+
 
 def show_currencies() -> None:
     """Show information about all currencies"""
@@ -15,8 +16,16 @@ def show_currencies() -> None:
         print(f'{i}. {key}', end=' | ')
         if not i % OUTPUT_DIVIDER:
             print()
-    add_info_about_currencies()
-    print(f'\n{CURRENCIES}')
+        # Filling in the dictionary with numerical codes
+        NUM_CURRENCIES[i] = CURRENCIES[key]
+    print()
 
-def add_info_about_currencies():
-    pass
+
+def info_about_currencies():
+    """Get information about currencies from file"""
+    file_json = open('info.json', "r")
+    return loads(file_json.read())
+
+
+# Dictionary with information about currencies
+INFO_CURRENCIES = info_about_currencies()

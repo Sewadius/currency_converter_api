@@ -1,6 +1,12 @@
 # currency_converter_api
 
+Ready:
 - get API key from json file
 - well-formatted currencies output
 - print info about command "info" for currencies
 - handle with Internet connection exceptions
+
+Want to do:
+- last values saving to file .json from last Internet data
+- get currencies from file there is no connection to Internet
+- conversion in one line as "USD 11.15 RUB"
