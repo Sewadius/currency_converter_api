@@ -10,13 +10,30 @@ no_result = True
 
 MESSAGE_FIRST_CURRENCY = 'Enter the first currency to convert (or the command): '
 MESSAGE_CURRENCY_ERR = 'The selected currency does not exist! Try again'
+MESSAGE_COMMAND_ERR = 'This user command does not exist! Try again'
 
 MESSAGE_EXIT = 'Have a great day and see you again!'
 EXIT_LIST = ['exit', 'quit', 'no']
 
 
 def print_currency_error() -> None:
+    """Prints message about wrong currency input"""
     print(MESSAGE_CURRENCY_ERR)
+
+
+def print_command_error() -> None:
+    """Prints message about wrong user command 'info'"""
+    print(MESSAGE_COMMAND_ERR)
+
+
+def check_currency_is_alpha(parameter: str) -> bool:
+    """Checks parameter is valid alpha currency"""
+    return parameter.isalpha() and parameter.upper() in CURRENCIES
+
+
+def check_currency_is_digit(parameter: str) -> bool:
+    """Checks parameter is valid digit currency"""
+    return parameter.isdigit() and parameter.lstrip('0') in CODES_CURRENCIES
 
 
 def handle_specific_command(prompt: str) -> None:
@@ -50,8 +67,9 @@ def handle_user_input(prompt: str) -> None:
             handle_specific_command(prompt)
             if first_currency is None:
                 check_currency(prompt)
-            elif amount is None:
-                check_user_amount(prompt)
+            # elif amount is None:
+            #     pass
+                # check_user_amount(prompt)
             # print(first_currency)
         case 2:  # Info command from user
             process_info_command(prompt)
@@ -59,11 +77,11 @@ def handle_user_input(prompt: str) -> None:
 
 def check_currency(prompt: str) -> None:
     """Check currency input, support '006' format"""
-    if prompt.isalpha() and prompt.upper() in CURRENCIES:
+    if check_currency_is_alpha(prompt):
         process_currency(prompt, True)
     else:
         try:
-            if prompt.isdigit() and prompt.lstrip('0') in CODES_CURRENCIES:
+            if check_currency_is_digit(prompt):
                 process_currency(prompt.lstrip('0'), False)
             else:
                 print_currency_error()
@@ -77,9 +95,25 @@ def process_currency(prompt: str, is_alpha: bool) -> None:
     first_currency = prompt.upper() if is_alpha else CODES_CURRENCIES.get(prompt)
 
 
-def check_user_amount(prompt: str) -> None:
-    print('OK')
+# def check_user_amount(prompt: str) -> None:
+#     print('OK')
 
 
 def process_info_command(prompt: str) -> None:
-    pass
+    """Process for info command from user"""
+    user_input = prompt.split()
+    command, parameter = user_input[0], user_input[1]
+
+    # Check conditions
+    no_check_info = command.lower() != 'info'
+    no_check_alpha = not check_currency_is_alpha(parameter)
+    no_check_digit = not check_currency_is_digit(parameter)
+    no_check_all = parameter.lower() != 'all'
+    wrong_input = no_check_info and (no_check_alpha or no_check_digit or no_check_all)
+
+    if wrong_input:                             # Wrong command input
+        print_command_error()
+        return
+
+    if no_check_all and no_check_digit:         # For alpha input info command
+        print(f'{parameter.upper()} - {INFO_CURRENCIES.get(parameter.upper())}')

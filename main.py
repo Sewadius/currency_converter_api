@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from greeting import greets
 from currency import show_currencies
 from  user_input import get_user_command
