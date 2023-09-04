@@ -4,7 +4,7 @@ from json import loads
 
 def get_api_key() -> str:
     """Get API Key from JSON file"""
-    file_json = open('key.json', "r")
+    file_json = open('json/key.json', "r")
     data = loads(file_json.read())
     return data['key']
 

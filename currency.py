@@ -2,11 +2,8 @@
 from get_data_api import CURRENCIES
 from json import loads
 
-# Separator for currency output
+# Separator for currency output by lines
 OUTPUT_DIVIDER = 6
-
-# Number codes dictionary for currencies
-NUM_CURRENCIES = {}
 
 
 def show_currencies() -> None:
@@ -16,16 +13,23 @@ def show_currencies() -> None:
         print(f'{i}. {key}', end=' | ')
         if not i % OUTPUT_DIVIDER:
             print()
-        # Filling in the dictionary with numerical codes
-        NUM_CURRENCIES[i] = CURRENCIES[key]
-    print()
+    print('\n')
 
 
-def info_about_currencies():
+def read_info_about_currencies():
     """Get information about currencies from file"""
-    file_json = open('info.json', "r")
+    file_json = open('json/info.json', "r")
+    return loads(file_json.read())
+
+
+def read_codes_currencies():
+    """Get information about codes for currencies from file"""
+    file_json = open('json/codes.json', "r")
     return loads(file_json.read())
 
 
 # Dictionary with information about currencies
-INFO_CURRENCIES = info_about_currencies()
+INFO_CURRENCIES = read_info_about_currencies()
+
+# Dictionary with number codes for currency names
+CODES_CURRENCIES = read_codes_currencies()
