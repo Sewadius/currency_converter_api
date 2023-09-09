@@ -48,7 +48,7 @@ from  user_input import get_user_command
 if __name__ == '__main__':
     greets()                    # Greeting for user
     show_currencies()           # Show info about currencies
-    get_user_command()
+    get_user_command()          # Command for user
 
     #
     # while True:

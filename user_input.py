@@ -105,15 +105,19 @@ def process_info_command(prompt: str) -> None:
     command, parameter = user_input[0], user_input[1]
 
     # Check conditions
-    no_check_info = command.lower() != 'info'
-    no_check_alpha = not check_currency_is_alpha(parameter)
-    no_check_digit = not check_currency_is_digit(parameter)
-    no_check_all = parameter.lower() != 'all'
-    wrong_input = no_check_info and (no_check_alpha or no_check_digit or no_check_all)
+    check_info = command.lower() == 'info'
+    check_alpha = check_currency_is_alpha(parameter)
+    check_digit = check_currency_is_digit(parameter)
+    check_all = parameter.lower() == 'all'
+    wrong_input = not check_info and (not check_alpha or not check_digit or not check_all)
 
     if wrong_input:                             # Wrong command input
         print_command_error()
         return
 
-    if no_check_all and no_check_digit:         # For alpha input info command
-        print(f'{parameter.upper()} - {INFO_CURRENCIES.get(parameter.upper())}')
+    if not check_all:
+        if check_alpha:         # For alpha input info command
+            print(f'{parameter.upper()} - {INFO_CURRENCIES.get(parameter.upper())}')
+        elif check_digit:       # For digit input info command
+            currency_name = CODES_CURRENCIES.get(parameter.lstrip('0'))
+            print(f'{currency_name} - {INFO_CURRENCIES.get(currency_name)}')
