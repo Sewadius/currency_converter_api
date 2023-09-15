@@ -2,7 +2,7 @@
 import sys
 
 from get_data_api import CURRENCIES
-from currency import INFO_CURRENCIES, CODES_CURRENCIES, show_currencies
+from currency import INFO_CURRENCIES, show_currencies
 
 # Global variables for first and second currency and total amount
 first_currency, amount, second_currency = [None] * 3
@@ -33,7 +33,7 @@ def check_currency_is_alpha(parameter: str) -> bool:
 
 def check_currency_is_digit(parameter: str) -> bool:
     """Checks parameter is valid digit currency"""
-    return parameter.isdigit() and parameter.lstrip('0') in CODES_CURRENCIES
+    return parameter.isdigit() #and parameter.lstrip('0') in CODES_CURRENCIES
 
 
 def handle_specific_command(prompt: str) -> None:
@@ -92,7 +92,7 @@ def check_currency(prompt: str) -> None:
 def process_currency(prompt: str, is_alpha: bool) -> None:
     """Process user input for existing currency"""
     global first_currency
-    first_currency = prompt.upper() if is_alpha else CODES_CURRENCIES.get(prompt)
+    #first_currency = prompt.upper() if is_alpha else CODES_CURRENCIES.get(prompt)
 
 
 # def check_user_amount(prompt: str) -> None:
@@ -119,5 +119,7 @@ def process_info_command(prompt: str) -> None:
         if check_alpha:         # For alpha input info command
             print(f'{parameter.upper()} - {INFO_CURRENCIES.get(parameter.upper())}')
         elif check_digit:       # For digit input info command
-            currency_name = CODES_CURRENCIES.get(parameter.lstrip('0'))
+            # currency_name = CODES_CURRENCIES.get(parameter.lstrip('0'))
+            index = int(parameter.lstrip('0'))
+            currency_name = INFO_CURRENCIES.iloc[index]
             print(f'{currency_name} - {INFO_CURRENCIES.get(currency_name)}')

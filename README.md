@@ -10,4 +10,5 @@ Ready:
 Want to do:
 - last values saving to file .json from last Internet data
 - get currencies from file there is no connection to Internet
-- conversion in one line as "usd rub 11,15"
+- conversion in one line as "usd rub 11,15"  
+- remove `CODES_CURRENCIES` and using `pandas` module instead  

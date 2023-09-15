@@ -1,6 +1,7 @@
 # Handle with currency dictionary
 from get_data_api import CURRENCIES
 from json import loads
+import pandas as pd
 
 # Separator for currency output by lines
 OUTPUT_DIVIDER = 6
@@ -29,7 +30,8 @@ def read_codes_currencies():
 
 
 # Dictionary with information about currencies
-INFO_CURRENCIES = read_info_about_currencies()
+INFO_CURRENCIES = pd.Series(read_info_about_currencies())
+# print(INFO_CURRENCIES.iloc[12])
 
 # Dictionary with number codes for currency names
-CODES_CURRENCIES = read_codes_currencies()
+# ODES_CURRENCIES = read_codes_currencies()

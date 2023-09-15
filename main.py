@@ -4,6 +4,12 @@ from currency import show_currencies
 from  user_input import get_user_command
 
 
+def main() -> None:
+    """Main function for program"""
+    greets()                # Greeting for user
+    show_currencies()       # Show info about currencies
+    get_user_command()      # Command for user
+
 # MESSAGE_CURRENCY_ERR = 'Выбранной валюты нет! Попробуйте снова.'
 # MESSAGE_AMOUNT_ERR = 'Неверно введена сумма! Попробуйте снова.'
 
@@ -45,10 +51,9 @@ from  user_input import get_user_command
 #     converted_amount = CURRENCIES.get(conv_currency, 1) / CURRENCIES.get(cur_currency, 1) * amount
 #     print(f"ИТОГО: {round(converted_amount, 2)} {converting_currency}")
 
+
 if __name__ == '__main__':
-    greets()                    # Greeting for user
-    show_currencies()           # Show info about currencies
-    get_user_command()          # Command for user
+    main()
 
     #
     # while True:
