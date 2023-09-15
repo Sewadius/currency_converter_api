@@ -23,15 +23,5 @@ def read_info_about_currencies():
     return loads(file_json.read())
 
 
-def read_codes_currencies():
-    """Get information about codes for currencies from file"""
-    file_json = open('json/codes.json', "r")
-    return loads(file_json.read())
-
-
-# Dictionary with information about currencies
+# Pandas series with information about currencies
 INFO_CURRENCIES = pd.Series(read_info_about_currencies())
-# print(INFO_CURRENCIES.iloc[12])
-
-# Dictionary with number codes for currency names
-# ODES_CURRENCIES = read_codes_currencies()

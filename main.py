@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from greeting import greets
 from currency import show_currencies
-from  user_input import get_user_command
+from user_input import get_user_command
 
 
 def main() -> None:
@@ -65,4 +65,3 @@ if __name__ == '__main__':
     #     user = input('Хотите запустить заново? (Да/Нет) ')
     #     if user.lower() == 'нет':
     #         break
-

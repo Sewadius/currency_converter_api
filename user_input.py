@@ -1,56 +1,16 @@
 # User input processing
-import sys
-
-from get_data_api import CURRENCIES
-from currency import INFO_CURRENCIES, show_currencies
+from currency import INFO_CURRENCIES
+import service as sv
 
 # Global variables for first and second currency and total amount
 first_currency, amount, second_currency = [None] * 3
 no_result = True
 
-MESSAGE_FIRST_CURRENCY = 'Enter the first currency to convert (or the command): '
-MESSAGE_CURRENCY_ERR = 'The selected currency does not exist! Try again'
-MESSAGE_COMMAND_ERR = 'This user command does not exist! Try again'
-
-MESSAGE_EXIT = 'Have a great day and see you again!'
-EXIT_LIST = ['exit', 'quit', 'no']
-
-
-def print_currency_error() -> None:
-    """Prints message about wrong currency input"""
-    print(MESSAGE_CURRENCY_ERR)
-
-
-def print_command_error() -> None:
-    """Prints message about wrong user command 'info'"""
-    print(MESSAGE_COMMAND_ERR)
-
-
-def check_currency_is_alpha(parameter: str) -> bool:
-    """Checks parameter is valid alpha currency"""
-    return parameter.isalpha() and parameter.upper() in CURRENCIES
-
-
-def check_currency_is_digit(parameter: str) -> bool:
-    """Checks parameter is valid digit currency"""
-    return parameter.isdigit() #and parameter.lstrip('0') in CODES_CURRENCIES
-
-
-def handle_specific_command(prompt: str) -> None:
-    """One word command processing"""
-    if prompt.lower() == 'show':
-        show_currencies()
-        return
-
-    if prompt.lower() in EXIT_LIST:
-        print(MESSAGE_EXIT)
-        sys.exit(0)
-
 
 def get_user_command() -> None:
     """Get command from user"""
     while first_currency is None:
-        user_prompt = input(MESSAGE_FIRST_CURRENCY)
+        user_prompt = input(sv.MESSAGE_FIRST_CURRENCY)
         handle_user_input(user_prompt)
     while amount is None:
         info = INFO_CURRENCIES.get(first_currency)
@@ -64,7 +24,7 @@ def handle_user_input(prompt: str) -> None:
     length = len(prompt.split())
     match length:
         case 1:  # Code or number for currency
-            handle_specific_command(prompt)
+            sv.handle_specific_command(prompt)
             if first_currency is None:
                 check_currency(prompt)
             # elif amount is None:
@@ -77,22 +37,27 @@ def handle_user_input(prompt: str) -> None:
 
 def check_currency(prompt: str) -> None:
     """Check currency input, support '006' format"""
-    if check_currency_is_alpha(prompt):
+    if sv.check_currency_is_alpha(prompt):
         process_currency(prompt, True)
     else:
         try:
-            if check_currency_is_digit(prompt):
+            if sv.check_currency_is_digit(prompt):
                 process_currency(prompt.lstrip('0'), False)
             else:
-                print_currency_error()
+                sv.print_currency_error()
         except ValueError:
-            print_currency_error()
+            sv.print_currency_error()
 
 
 def process_currency(prompt: str, is_alpha: bool) -> None:
     """Process user input for existing currency"""
     global first_currency
-    #first_currency = prompt.upper() if is_alpha else CODES_CURRENCIES.get(prompt)
+
+    if is_alpha:
+        first_currency = prompt.upper()
+    else:
+        pos = int(prompt)
+        first_currency = INFO_CURRENCIES.index[pos - 1]
 
 
 # def check_user_amount(prompt: str) -> None:
@@ -105,21 +70,24 @@ def process_info_command(prompt: str) -> None:
     command, parameter = user_input[0], user_input[1]
 
     # Check conditions
-    check_info = command.lower() == 'info'
-    check_alpha = check_currency_is_alpha(parameter)
-    check_digit = check_currency_is_digit(parameter)
-    check_all = parameter.lower() == 'all'
-    wrong_input = not check_info and (not check_alpha or not check_digit or not check_all)
+    is_info = command.lower() == 'info'
+    is_alpha = sv.check_currency_is_alpha(parameter)
+    is_digit = sv.check_currency_is_digit(parameter)
+    is_all = parameter.lower() == 'all'
+    wrong_input = not is_info and (not is_alpha or not is_digit or not is_all)
 
     if wrong_input:                             # Wrong command input
-        print_command_error()
+        sv.print_command_error()
         return
 
-    if not check_all:
-        if check_alpha:         # For alpha input info command
+    if not is_all:
+        # For alpha input info command
+        if is_alpha:
             print(f'{parameter.upper()} - {INFO_CURRENCIES.get(parameter.upper())}')
-        elif check_digit:       # For digit input info command
+        # For digit input info command
+        elif is_digit:
             # currency_name = CODES_CURRENCIES.get(parameter.lstrip('0'))
-            index = int(parameter.lstrip('0'))
-            currency_name = INFO_CURRENCIES.iloc[index]
-            print(f'{currency_name} - {INFO_CURRENCIES.get(currency_name)}')
+            pos = int(parameter.lstrip('0'))
+            currency_name, currency_info = (
+                INFO_CURRENCIES.index[pos - 1], INFO_CURRENCIES.iloc[pos - 1])
+            print(f'{currency_name} - {currency_info}')
