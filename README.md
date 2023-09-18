@@ -1,5 +1,5 @@
 ## Currency Converter API
-___
+
 <img src="img/currencies.jpg" style="height:200px">
 
 *Ready*:
@@ -17,3 +17,7 @@ ___
 
 *New*:  
 - added module `service.py` for some functions and data  
+
+*Fixes*:
+- removed error message for `show` command  
+- `info all` and `info` command are implemented  

@@ -37,6 +37,8 @@ def handle_user_input(prompt: str) -> None:
 
 def check_currency(prompt: str) -> None:
     """Check currency input, support '006' format"""
+    if prompt.lower() == 'show':
+        return
     if sv.check_currency_is_alpha(prompt):
         process_currency(prompt, True)
     else:
@@ -66,28 +68,37 @@ def process_currency(prompt: str, is_alpha: bool) -> None:
 
 def process_info_command(prompt: str) -> None:
     """Process for info command from user"""
-    user_input = prompt.split()
-    command, parameter = user_input[0], user_input[1]
+    cmd, parameter = prompt.split()
 
     # Check conditions
-    is_info = command.lower() == 'info'
+    is_info = cmd.lower() == 'info'
     is_alpha = sv.check_currency_is_alpha(parameter)
     is_digit = sv.check_currency_is_digit(parameter)
     is_all = parameter.lower() == 'all'
-    wrong_input = not is_info and (not is_alpha or not is_digit or not is_all)
 
-    if wrong_input:                             # Wrong command input
+    checks = [is_alpha, is_digit, is_all]
+    wrong_input = not (is_info and any(checks))
+
+    if wrong_input:
         sv.print_command_error()
         return
 
-    if not is_all:
-        # For alpha input info command
-        if is_alpha:
-            print(f'{parameter.upper()} - {INFO_CURRENCIES.get(parameter.upper())}')
-        # For digit input info command
-        elif is_digit:
-            # currency_name = CODES_CURRENCIES.get(parameter.lstrip('0'))
-            pos = int(parameter.lstrip('0'))
-            currency_name, currency_info = (
+    handle_info_command(checks, parameter)
+
+
+def handle_info_command(checks: list, par: str) -> None:
+    """Handle for info command from user"""
+    alpha, digit, all_check = checks
+
+    if not all_check:   # Not all info command
+        if alpha:       # For alpha input info command
+            print(f'{par.upper()} - {INFO_CURRENCIES.get(par.upper())}')
+        elif digit:     # For digit input info command
+            pos = int(par.lstrip('0'))
+            cur_name, cur_info = (
                 INFO_CURRENCIES.index[pos - 1], INFO_CURRENCIES.iloc[pos - 1])
-            print(f'{currency_name} - {currency_info}')
+            print(f'{cur_name} - {cur_info}')
+    else:               # Info all command
+        for k, v in INFO_CURRENCIES.items():
+            print(f'{k}: {v}')
+        print()
