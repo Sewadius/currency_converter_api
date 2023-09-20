@@ -14,9 +14,11 @@
 - last values saving to file .json from last Internet data
 - get currencies from file there is no connection to Internet
 - conversion in one line as `usd rub 11,15`
+- write handle function for second currency input
 
 *New*:  
 - added module `service.py` for some functions and data  
+- input for `amount` is ready with `,` replace and check negative  
 
 *Fixes*:
 - removed error message for `show` command  

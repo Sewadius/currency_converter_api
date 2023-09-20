@@ -17,6 +17,9 @@ def get_user_command() -> None:
         message_amount = f'Enter the desired amount of {first_currency} [{info}] (or the command): '
         user_amount = input(message_amount)
         handle_user_input(user_amount)
+    while second_currency is None:
+        user_prompt = input(sv.MESSAGE_SECOND_CURRENCY)
+        handle_user_input(user_prompt)
 
 
 def handle_user_input(prompt: str) -> None:
@@ -25,12 +28,14 @@ def handle_user_input(prompt: str) -> None:
     match length:
         case 1:  # Code or number for currency
             sv.handle_specific_command(prompt)
-            if first_currency is None:
+            if (                            # Get first or second currency
+                first_currency is None
+                or amount is not None
+                and second_currency is None
+            ):
                 check_currency(prompt)
-            # elif amount is None:
-            #     pass
-                # check_user_amount(prompt)
-            # print(first_currency)
+            elif amount is None:            # Get value for amount
+                check_user_amount(prompt)
         case 2:  # Info command from user
             process_info_command(prompt)
 
@@ -62,8 +67,13 @@ def process_currency(prompt: str, is_alpha: bool) -> None:
         first_currency = INFO_CURRENCIES.index[pos - 1]
 
 
-# def check_user_amount(prompt: str) -> None:
-#     print('OK')
+def check_user_amount(prompt: str) -> None:
+    """Check amount for first currency"""
+    global amount
+    if prompt.lower() == 'show':
+        return
+    if test_value := sv.get_float_value(prompt):
+        amount = test_value
 
 
 def process_info_command(prompt: str) -> None:

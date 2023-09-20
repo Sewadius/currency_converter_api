@@ -22,14 +22,6 @@ def main() -> None:
 #         print(MESSAGE_CURRENCY_ERROR)
 #     return current_currency
 #
-# # Название аргумента s мало информативно
-# def is_float(s: str) -> bool:
-#     try:
-#         float(s)
-#         return True
-#     except ValueError:
-#         return False
-#
 # def input_amount():
 #     while True:
 #         amount = input("Введите сумму: ")

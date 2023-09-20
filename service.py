@@ -3,10 +3,20 @@ import sys
 from currency import CURRENCIES, INFO_CURRENCIES, show_currencies
 
 MESSAGE_FIRST_CURRENCY = 'Enter the first currency to convert (or the command): '
+MESSAGE_SECOND_CURRENCY = 'Enter the second currency to convert (or the command): '
 MESSAGE_CURRENCY_ERR = 'The selected currency does not exist! Try again'
 MESSAGE_COMMAND_ERR = 'This user command does not exist! Try again'
 MESSAGE_EXIT = 'Have a great day and see you again!'
 EXIT_LIST = ['exit', 'quit', 'no']
+
+
+def get_float_value(prompt: str) -> float:
+    """Checks user's input is float number"""
+    try:
+        prompt = prompt.replace(',', '.')
+        return max(float(prompt), 0)        # Protection from negative input
+    except ValueError:
+        return 0
 
 
 def print_currency_error() -> None:
