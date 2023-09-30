@@ -19,6 +19,8 @@
 *New*:  
 - added module `service.py` for some functions and data  
 - input for `amount` is ready with `,` replace and check negative  
+- finished work with step-by-step input from user  
+- using `calculation.py` for converting and getting the result  
 
 *Fixes*:
 - removed error message for `show` command  

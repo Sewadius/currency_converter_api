@@ -1,5 +1,6 @@
 # User input processing
 from currency import INFO_CURRENCIES
+from calculation import calculate_result
 import service as sv
 
 # Global variables for first and second currency and total amount
@@ -21,14 +22,17 @@ def get_user_command() -> None:
         user_prompt = input(sv.MESSAGE_SECOND_CURRENCY)
         handle_user_input(user_prompt)
 
+    # Get final result in `calculation.py` module
+    calculate_result(first_currency, amount, second_currency)
+
 
 def handle_user_input(prompt: str) -> None:
     """Selection depending on the length of the command"""
     length = len(prompt.split())
     match length:
-        case 1:  # Code or number for currency
+        case 1:  # Code or number for currency, length 1
             sv.handle_specific_command(prompt)
-            if (                            # Get first or second currency
+            if (                            # Get first/second currency
                 first_currency is None
                 or amount is not None
                 and second_currency is None
@@ -36,7 +40,7 @@ def handle_user_input(prompt: str) -> None:
                 check_currency(prompt)
             elif amount is None:            # Get value for amount
                 check_user_amount(prompt)
-        case 2:  # Info command from user
+        case 2:  # Info command from user, length 2
             process_info_command(prompt)
 
 
@@ -58,13 +62,19 @@ def check_currency(prompt: str) -> None:
 
 def process_currency(prompt: str, is_alpha: bool) -> None:
     """Process user input for existing currency"""
-    global first_currency
+    global first_currency, second_currency
 
     if is_alpha:
-        first_currency = prompt.upper()
+        if first_currency is None:
+            first_currency = prompt.upper()
+        else:
+            second_currency = prompt.upper()
     else:
         pos = int(prompt)
-        first_currency = INFO_CURRENCIES.index[pos - 1]
+        if first_currency is None:
+            first_currency = INFO_CURRENCIES.index[pos - 1]
+        else:
+            second_currency = INFO_CURRENCIES.index[pos - 1]
 
 
 def check_user_amount(prompt: str) -> None:
